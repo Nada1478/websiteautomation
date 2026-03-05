@@ -35,7 +35,7 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-# Attach policy for S3, EC2, VPC, and IAM read permissions
+# Attach policy for S3, EC2, VPC, and IAM permissions
 resource "aws_iam_role_policy" "terraform" {
   name = "terraform-policy"
   role = aws_iam_role.github_actions.id
@@ -54,7 +54,9 @@ resource "aws_iam_role_policy" "terraform" {
           "iam:GetRolePolicy",
           "iam:ListInstanceProfiles",
           "iam:ListRoles",
-          "iam:ListOpenIDConnectProviders"
+          "iam:ListOpenIDConnectProviders",
+          "iam:ListRolePolicies",  # Added this line!
+          "iam:ListAttachedRolePolicies"  # Added this for good measure
         ]
         Resource = ["*"]
       }
