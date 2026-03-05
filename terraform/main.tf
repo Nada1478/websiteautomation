@@ -85,6 +85,7 @@ resource "aws_s3_object" "error" {
   #acl    = "public-read"
   content_type = "text/html"
 }
+
 # Make bucket public
 resource "aws_s3_bucket_public_access_block" "s3terra" {
   bucket = aws_s3_bucket.s3terra.id
@@ -95,7 +96,7 @@ resource "aws_s3_bucket_public_access_block" "s3terra" {
   restrict_public_buckets = false
 }
 
-# Bucket policy for public read
+# Bucket policy for public read - FIXED with depends_on
 resource "aws_s3_bucket_policy" "s3terra" {
   bucket = aws_s3_bucket.s3terra.id
   policy = jsonencode({
@@ -110,4 +111,7 @@ resource "aws_s3_bucket_policy" "s3terra" {
       }
     ]
   })
+  
+  # This ensures the public access block is applied first
+  depends_on = [aws_s3_bucket_public_access_block.s3terra]
 }
