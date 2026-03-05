@@ -34,15 +34,15 @@ jobs:
           terraform_version: ${{ env.TF_VERSION }}
 
       - name: Terraform Init
-        run: terraform init
+        run: cd terraform && terraform init
 
       - name: Terraform Plan (PR only)
         if: github.event_name == 'pull_request'
-        run: terraform plan
+        run: cd terraform && terraform plan
 
       - name: Terraform Apply (main branch only)
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve
+        run: cd terraform && terraform apply -auto-approve
 
       - name: Get Website URL
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
