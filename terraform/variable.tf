@@ -5,3 +5,7 @@ variable "aws_vpc_cider_block" {
 variable "aws_subnet_cider_block" {
  default = "10.0.1.0/24"
 }
+
+variable "aws_region" {
+ default = "us-east-1"
+}
